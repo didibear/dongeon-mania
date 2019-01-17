@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths" : {
+      "@/*" : ["assets/*"]
+    },
+    "typeRoots": [
+      "../node_modules/@types",
+      "./@types"
+  ]
+  }
+}
