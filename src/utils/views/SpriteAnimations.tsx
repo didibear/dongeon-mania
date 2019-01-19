@@ -2,7 +2,7 @@
 import React from "react";
 import StackedComponents from "./StackedComponents";
 import Visible from "./Visible";
-import { EventBus } from 'events/EventBus'
+import { EventBus } from 'utils/events/EventBus'
 import Spritesheet from 'react-responsive-spritesheet';
 
 /////////////////////
@@ -48,13 +48,19 @@ type State = {
 }
 
 export default class SpriteAnimations extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props)
+  state: State = { instantAnimations: new Map() }
+  eventHandlers: { topic: string, callback: (() => void) }[] = []
 
-    this.state = { instantAnimations: new Map() }
+  componentDidMount = () => {
+    this.props.children.instantAnimations.forEach(animationProps => {
+      const startInstantAnimation = () => this.startInstantAnimation(animationProps);
+      this.props.eventBus.subscribe(animationProps.when, startInstantAnimation)
+      this.eventHandlers.push({ topic: animationProps.when, callback: startInstantAnimation })
+    })
+  }
 
-    this.props.children.instantAnimations.forEach(animationProps =>
-      this.props.eventBus.subscribe(animationProps.when, () => this.startInstantAnimation(animationProps)))
+  componentWillUnmount = () => {
+    this.eventHandlers.forEach(handler => this.props.eventBus.unsubscribe(handler.topic, handler.callback))
   }
 
   private startInstantAnimation = (animationProps: InstantAnimationProps): void => {

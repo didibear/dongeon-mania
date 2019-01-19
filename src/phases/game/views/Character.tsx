@@ -2,9 +2,9 @@ import attack1 from 'assets/img/attack1.png';
 import attack2 from 'assets/img/attack2.png';
 import attack3 from 'assets/img/attack3.png';
 import character from 'assets/img/character.png';
-import eventBus from "events/EventBus";
+import eventBus from "utils/events/EventBus";
 import React from "react";
-import SpriteAnimations from "./utils/SpriteAnimations";
+import SpriteAnimations from "../../../utils/views/SpriteAnimations";
 
 export default () => <SpriteAnimations eventBus={eventBus} widthFrame={50} heightFrame={36}>
   {{

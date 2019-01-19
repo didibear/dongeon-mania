@@ -2,7 +2,7 @@ import background from 'assets/img/background.png';
 import enemy from 'assets/img/enemy.png';
 import React from "react";
 import Grid from 'react-css-grid';
-import RhythmTilesView from "views/RhythmTilesView";
+import RhythmTilesView from "./RhythmTilesView";
 import Character from './Character';
 
 const backgroundStyle = {

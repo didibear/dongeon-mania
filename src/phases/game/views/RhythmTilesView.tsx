@@ -2,8 +2,8 @@ import _ from "lodash"
 import { inject, observer } from 'mobx-react'
 import React, { Fragment } from "react"
 import { HANDLED_KEYS, MARGIN, NB_TILE_COLUMNS, NB_VISIBLE_TILES, TILE_COLORS, TILE_WIDTH } from "Constant"
-import { GameState } from "states/GameState"
-import { KeyboardState } from "states/KeyboardState"
+import RhythmTileState from "phases/game/RhythmTileState"
+import { KeyboardState } from "utils/events/KeyboardState"
 
 // Constants
 
@@ -68,13 +68,13 @@ const HighlightTiles = observer(({ downKeys }: { downKeys: Map<string, boolean> 
 
 type RhythmTilesProps = {
   keyboardState?: KeyboardState
-  gameState?: GameState
+  rhythmTileState?: RhythmTileState
 }
 
-export default inject("keyboardState", "gameState")(observer((props: RhythmTilesProps) => {
-  const { keyboardState, gameState } = props
+export default inject("keyboardState", "rhythmTileState")(observer((props: RhythmTilesProps) => {
+  const { keyboardState, rhythmTileState } = props
 
-  const { tileSequence, currentTile, transition } = gameState!
+  const { tileSequence, currentTile, transition } = rhythmTileState!
   const { downKeys } = keyboardState!
 
   const visibleTileSequence = tileSequence.slice(currentTile, currentTile + NB_VISIBLE_TILES)

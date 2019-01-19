@@ -1,12 +1,9 @@
 
-import { observable, computed, action, reaction } from 'mobx'
-import { array } from 'prop-types'
-import { NB_TILE_COLUMNS, ANIMATION_TIME, TRANSITION_STEPS } from 'Constant'
-import _ from 'lodash'
+import { NB_TILE_COLUMNS } from 'Constant';
+import { observable } from 'mobx';
 
-function randInt(max: number) {
-  return Math.floor(Math.random() * Math.floor(max))
-}
+const randInt = (max: number) => Math.floor(Math.random() * Math.floor(max))
+
 export function generateTileSequence(n: number): number[] {
   const array: number[] = []
   let next
@@ -22,10 +19,8 @@ export function generateTileSequence(n: number): number[] {
   return array
 }
 
-export class GameState {
+export default class RhythmTileState {
   @observable tileSequence: number[] = generateTileSequence(10)
   @observable currentTile: number = 0
   @observable transition: number = 0
 }
-
-export default new GameState()
