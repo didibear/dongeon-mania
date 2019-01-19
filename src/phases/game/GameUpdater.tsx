@@ -1,9 +1,10 @@
-import { ANIMATION_TIME, HANDLED_KEYS, TRANSITION_STEPS } from 'Constant';
+import { ANIMATION_TIME, TRANSITION_STEPS } from 'Constant';
 import _ from 'lodash';
 import { action } from 'mobx';
 import { generateTileSequence } from 'phases/game/RhythmTileState';
 import eventBus from "utils/events/EventBus";
 import RhythmTileState from './RhythmTileState';
+import settingStore from "SettingStore"
 
 
 export class GameUpdater {
@@ -13,9 +14,10 @@ export class GameUpdater {
 
     update = (keyPressed: string) => {
         const numTile = this.rhythmTileState.tileSequence[this.rhythmTileState.currentTile]
-        const keyTile = HANDLED_KEYS.get(numTile)
+        const keyTile1 = settingStore.gameKeys1[numTile]
+        const keyTile2 = settingStore.gameKeys2[numTile]
 
-        if (keyTile === keyPressed) {
+        if (keyTile1 === keyPressed || keyTile2 === keyPressed) {
             this.goToNextTileDebounce()
 
         }

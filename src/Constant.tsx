@@ -1,9 +1,8 @@
-import { List } from 'immutable'
-
-export const HANDLED_KEYS = List<string>(["a", "z", "e", "r", "t", "y", "u"])
-// export const HANDLED_KEYS = List<string>(["h", "j", "k", "l", "m"])
-
 export const NB_TILE_COLUMNS = 5
+
+export const DEFAULT_GAME_KEYS_1 = ["a", "z", "e", "r", "t"]
+export const DEFAULT_GAME_KEYS_2 = ["y", "u", "i", "o", "p"]
+
 export const NB_VISIBLE_TILES = 7
 
 

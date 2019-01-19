@@ -1,9 +1,10 @@
 import _ from "lodash"
 import { inject, observer } from 'mobx-react'
 import React, { Fragment } from "react"
-import { HANDLED_KEYS, MARGIN, NB_TILE_COLUMNS, NB_VISIBLE_TILES, TILE_COLORS, TILE_WIDTH } from "Constant"
+import { MARGIN, NB_TILE_COLUMNS, NB_VISIBLE_TILES, TILE_COLORS, TILE_WIDTH } from "Constant"
 import RhythmTileState from "phases/game/RhythmTileState"
 import { KeyboardState } from "utils/events/KeyboardState"
+import settingStore from "SettingStore"
 
 // Constants
 
@@ -59,7 +60,7 @@ const HighlightTile = ({ numTile }: { numTile: number }) => (
 
 const HighlightTiles = observer(({ downKeys }: { downKeys: Map<string, boolean> }) => <>
   {Array.from(downKeys.keys()).map(k => (
-    <HighlightTile key={`highlight tile ${k}`} numTile={HANDLED_KEYS.indexOf(k)} />)
+    <HighlightTile key={`highlight tile ${k}`} numTile={settingStore.keyIndexOf(k)} />)
   )}
 </>)
 
