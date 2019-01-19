@@ -1,11 +1,15 @@
-import FiniteStateMachine, { MachineState } from "utils/FiniteStateMachine";
-import React from 'react';
-import GameView from "phases/game/views/GameView";
+import enemy from 'assets/img/enemy.png';
+import { Provider } from "mobx-react";
 import Menu from "phases/menu/Menu";
+import React from 'react';
+import Grid from 'react-css-grid';
 import { KeyboardState } from "utils/events/KeyboardState";
+import FiniteStateMachine, { MachineState } from "utils/FiniteStateMachine";
+import Character from './views/Character';
 import { GameUpdater } from "./GameUpdater";
 import RhythmTileState from "./RhythmTileState";
-import { Provider } from "mobx-react";
+import RhythmTilesView from "./views/RhythmTilesView";
+
 
 
 export default class Game implements MachineState {
@@ -22,7 +26,7 @@ export default class Game implements MachineState {
     this.keyboardState.downKeys.delete(event.key)
   }
 
-  init = () => {  
+  init = () => {
     document.addEventListener('keydown', this.handleKeyDown)
     document.addEventListener('keyup', this.handleKeyUp)
   }
@@ -34,9 +38,14 @@ export default class Game implements MachineState {
 
   render = (context: FiniteStateMachine) => <>
     <button onClick={() => context.changeState(new Menu())}>Quitter</button>
-    
+
     <Provider keyboardState={this.keyboardState} rhythmTileState={this.rhythmTileState} >
-      <GameView />
+      <Grid width="33%" gap={0} style={{ paddingTop: "10%" }}>
+        <Character />
+        <RhythmTilesView />
+        <img style={{ display: "inline-block" }} src={enemy} width="80%" />
+
+      </Grid>
     </Provider>
   </>
 }

@@ -3,6 +3,7 @@ import DevTools from 'mobx-react-devtools';
 import Menu from 'phases/menu/Menu';
 import React from 'react';
 import FiniteStateMachine from 'utils/FiniteStateMachine';
+import Game from 'phases/game/Game';
 
 const backgroundStyle : React.CSSProperties= {
   height: "100vh",
@@ -17,7 +18,7 @@ const backgroundStyle : React.CSSProperties= {
 export default class App extends React.Component {
 
   render = () => <div tabIndex={0} style={backgroundStyle}>
-    <FiniteStateMachine startState={new Menu()} />
+    <FiniteStateMachine startState={new Game()} />
     <DevTools />
   </div>
 }

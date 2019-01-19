@@ -1,30 +1,36 @@
 import _ from "lodash"
 import { inject, observer } from 'mobx-react'
 import React, { Fragment } from "react"
-import { MARGIN, NB_TILE_COLUMNS, NB_VISIBLE_TILES, TILE_COLORS, TILE_WIDTH } from "Constant"
+import { NB_TILE_COLUMNS, NB_VISIBLE_TILES, TILE_COLORS } from "Constant"
 import RhythmTileState from "phases/game/RhythmTileState"
 import { KeyboardState } from "utils/events/KeyboardState"
 import settingStore from "SettingStore"
 
 // Constants
 
+
+const BOARD_WIDTH = 100
+const BOARD_HEIGHT = 100
+const MARGIN = 1
+const TILE_WIDTH = (BOARD_WIDTH - MARGIN * (NB_TILE_COLUMNS + 1)) / NB_TILE_COLUMNS
+
 const TILE_SPAN = TILE_WIDTH + MARGIN
-const BOARD_WIDTH = NB_TILE_COLUMNS * TILE_SPAN + MARGIN * 2
+// const BOARD_WIDTH = NB_TILE_COLUMNS * TILE_SPAN + MARGIN * 2
 const TRACK_HEIGHT = NB_VISIBLE_TILES * TILE_SPAN
 
 //////////////////////
 // Components
 
 const Arrival = () => <rect key="arrival"
-  x={0 - MARGIN} y={(NB_VISIBLE_TILES - 1) * TILE_SPAN}
-  width={BOARD_WIDTH} height={TILE_SPAN + MARGIN}
+  x={`${0 - MARGIN}%`} y={`${(NB_VISIBLE_TILES - 1) * TILE_SPAN}%`}
+  width={`${BOARD_WIDTH}%`} height={`${TILE_SPAN + MARGIN}%`}
   fill="grey" />
 
 // Tracks
 
 const Track = (props: { numTile: number }) => (
-  <rect x={props.numTile * TILE_SPAN} y={0}
-    width={TILE_WIDTH} height={TRACK_HEIGHT}
+  <rect x={`${props.numTile * TILE_SPAN}%`} y={0}
+    width={`${TILE_WIDTH}%`} height={`${TRACK_HEIGHT}%`}
     fill="#AAA" />
 )
 
@@ -38,8 +44,8 @@ const Tracks = () => <>
 // Tiles
 
 const Tile = ({ numTile, position, transitionGap }: { numTile: number, position: number, transitionGap: number }) => (
-  <circle cx={numTile * TILE_SPAN + TILE_WIDTH / 2} cy={TRACK_HEIGHT - (position + 1) * TILE_SPAN - transitionGap + MARGIN + TILE_WIDTH / 2}
-    r={TILE_WIDTH / 3}
+  <circle cx={`${numTile * TILE_SPAN + TILE_WIDTH / 2}%`} cy={`${TRACK_HEIGHT - (position + 1) * TILE_SPAN - transitionGap + MARGIN + TILE_WIDTH / 2}%`}
+    r={`${TILE_WIDTH / 3}%`}
     fill={TILE_COLORS[numTile]} />
 )
 
@@ -53,8 +59,8 @@ const Tiles = ({ visibleTileSequence, transitionGap }: { visibleTileSequence: nu
 // HighlightTiles
 
 const HighlightTile = ({ numTile }: { numTile: number }) => (
-  <circle cx={numTile * TILE_SPAN + TILE_WIDTH / 2} cy={TRACK_HEIGHT - TILE_SPAN + MARGIN + TILE_WIDTH / 2}
-    r={TILE_WIDTH / 3.5}
+  <circle cx={`${numTile * TILE_SPAN + TILE_WIDTH / 2}%`} cy={`${TRACK_HEIGHT - TILE_SPAN + MARGIN + TILE_WIDTH / 2}%`}
+    r={`${TILE_WIDTH / 3.5}%`}
     fill="rgb(256, 256, 256, 0.5)" />
 )
 
@@ -81,16 +87,18 @@ export default inject("keyboardState", "rhythmTileState")(observer((props: Rhyth
   const visibleTileSequence = tileSequence.slice(currentTile, currentTile + NB_VISIBLE_TILES)
   const transitionGap = transition * TILE_SPAN
 
-  return <div style={{textAlign: "left"}}>
-    <svg width={BOARD_WIDTH} height={TRACK_HEIGHT + MARGIN}>
+  return <div>
+    <div style={{ width: "70%", height: "100%", display: "inline-block" }}>
+      <svg width={`${BOARD_WIDTH}%`} height={`${BOARD_HEIGHT}%`}>
 
-      <Arrival />
+        <Arrival />
 
-      <svg x={MARGIN}>
-        <Tracks />
-        <Tiles visibleTileSequence={visibleTileSequence} transitionGap={transitionGap} />
-        <HighlightTiles downKeys={downKeys} />
+        <svg x={`${MARGIN / 2}%`}>
+          <Tracks />
+          <Tiles visibleTileSequence={visibleTileSequence} transitionGap={transitionGap} />
+          <HighlightTiles downKeys={downKeys} />
+        </svg>
       </svg>
-    </svg>
+    </div>
   </div>
 }))

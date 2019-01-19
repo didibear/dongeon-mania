@@ -1,4 +1,4 @@
-import { NB_TILE_COLUMNS, MARGIN, DEFAULT_GAME_KEYS_1, DEFAULT_GAME_KEYS_2 } from 'Constant';
+import { NB_TILE_COLUMNS, DEFAULT_GAME_KEYS_1, DEFAULT_GAME_KEYS_2 } from 'Constant';
 import _ from 'lodash';
 import { Observer } from 'mobx-react';
 import React from 'react';
