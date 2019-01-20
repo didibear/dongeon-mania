@@ -87,18 +87,16 @@ export default inject("keyboardState", "rhythmTileState")(observer((props: Rhyth
   const visibleTileSequence = tileSequence.slice(currentTile, currentTile + NB_VISIBLE_TILES)
   const transitionGap = transition * TILE_SPAN
 
-  return <div>
-    <div style={{ width: "70%", height: "100%", display: "inline-block" }}>
-      <svg width={`${BOARD_WIDTH}%`} height={`${BOARD_HEIGHT}%`}>
+  return <div style={{ width: "40%", height: "100%", display: "inline-block" }}>
+    <svg width={`${BOARD_WIDTH}%`} height={`${BOARD_HEIGHT}%`}>
 
-        <Arrival />
+      <Arrival />
 
-        <svg x={`${MARGIN / 2}%`}>
-          <Tracks />
-          <Tiles visibleTileSequence={visibleTileSequence} transitionGap={transitionGap} />
-          <HighlightTiles downKeys={downKeys} />
-        </svg>
+      <svg x={`${MARGIN / 2}%`}>
+        <Tracks />
+        <Tiles visibleTileSequence={visibleTileSequence} transitionGap={transitionGap} />
+        <HighlightTiles downKeys={downKeys} />
       </svg>
-    </div>
+    </svg>
   </div>
 }))

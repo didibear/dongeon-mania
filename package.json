@@ -13,7 +13,6 @@
     "mobx": "^5.8.0",
     "mobx-react": "^5.4.3",
     "react": "^16.7.0",
-    "react-css-grid": "^2.0.0-0",
     "react-dom": "^16.7.0",
     "react-responsive-spritesheet": "^2.3.9",
     "react-scripts": "2.1.3"

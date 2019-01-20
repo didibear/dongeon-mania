@@ -1,0 +1,36 @@
+#game-layout {
+  display: grid;
+
+  height: 100%;
+  width: 100%;
+  
+  grid-template: ". rhythm-tiles ." 1fr
+                 "character rhythm-tiles enemy" 1fr
+                 "character lines enemy" 2fr
+                 / 1fr 2fr 1fr;
+
+}
+
+.rhythm-tiles {
+  padding: 2%;
+  
+  background-color: rgb(0, 255, 0, 0.3);
+  grid-area: rhythm-tiles;
+}
+
+.character {
+  background-color: rgb(255, 0, 0, 0.3);
+  grid-area: character;
+}
+
+.enemy {
+  background-color: rgb(0, 255, 255, 0.3);
+  grid-area: enemy;
+}
+
+.lines {
+  padding-top: 10%;
+  
+  background-color: rgb(0, 0, 255, 0.3);
+  grid-area: lines;
+}
