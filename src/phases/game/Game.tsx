@@ -1,24 +1,28 @@
 import enemy from 'assets/img/enemy.png';
+import { ANIMATION_TIME } from 'Constant';
 import { Provider } from "mobx-react";
 import React from 'react';
 import { KeyboardState } from "utils/events/KeyboardState";
 import FiniteStateMachine, { MachineState } from "utils/FiniteStateMachine";
 import { GameUpdater } from "./GameUpdater";
 import "./Layout.css";
+import PowerLinesState from "./PowerLinesState";
 import RhythmTileState from "./RhythmTileState";
 import Character from './views/Character';
-import RhythmTilesView from "./views/RhythmTilesView";
 import PowerLines from './views/PowerLines';
+import RhythmTilesView from "./views/RhythmTilesView";
 
 
 export default class Game implements MachineState {
   keyboardState = new KeyboardState()
   rhythmTileState = new RhythmTileState()
-  gameUpdater = new GameUpdater(this.rhythmTileState)
+  powerLinesState = new PowerLinesState()
+
+  gameUpdater = new GameUpdater(this.rhythmTileState, this.powerLinesState)
 
   handleKeyDown = (event: KeyboardEvent) => {
     this.keyboardState.downKeys.set(event.key, true)
-    this.gameUpdater.update(event.key)
+    this.gameUpdater.handleKeyEvent(event.key)
   }
 
   handleKeyUp = (event: KeyboardEvent) => {
@@ -26,8 +30,10 @@ export default class Game implements MachineState {
   }
 
   init = () => {
+    this.gameUpdater.init()
     document.addEventListener('keydown', this.handleKeyDown)
     document.addEventListener('keyup', this.handleKeyUp)
+    setInterval(this.gameUpdater.update, ANIMATION_TIME)
   }
 
   cleanup = () => {
@@ -48,7 +54,7 @@ export default class Game implements MachineState {
         </Provider>
       </div>
       <div className="lines">
-        <Provider keyboardState={this.keyboardState} rhythmTileState={this.rhythmTileState} >
+        <Provider powerLinesState={this.powerLinesState}>
           <PowerLines />
         </Provider>
       </div>

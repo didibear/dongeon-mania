@@ -1,5 +1,5 @@
 
-import { NB_TILE_COLUMNS } from 'Constant';
+import { NB_TILE_COLUMNS, SEQUENCE_LENGTH } from 'Constant';
 import { observable } from 'mobx';
 
 const randInt = (max: number) => Math.floor(Math.random() * Math.floor(max))
@@ -20,7 +20,7 @@ export function generateTileSequence(n: number): number[] {
 }
 
 export default class RhythmTileState {
-  @observable tileSequence: number[] = generateTileSequence(1000)
+  @observable tileSequence: number[] = generateTileSequence(SEQUENCE_LENGTH)
   @observable currentTile: number = 0
   @observable transition: number = 0
 }
