@@ -1,23 +1,23 @@
-import { ANIMATION_TIME, SEQUENCE_LENGTH, TRANSITION_STEPS } from 'Constant';
+import { ANIMATION_TIME, SEQUENCE_LENGTH, TRANSITION_STEPS, NB_LINES } from 'Constant';
 import _ from 'lodash';
 import { action } from 'mobx';
-import { generateTileSequence } from 'phases/game/RhythmTileState';
+import { generateTileSequence } from 'phases/game/RhythmSequence/RhythmSequenceState';
 import settingStore from "SettingStore";
 import eventBus from "utils/events/EventBus";
-import PowerLinesState from './PowerLinesState';
-import RhythmTileState from './RhythmTileState';
-import { PlayersState } from './PlayersState';
+import { PowerLinesState } from './PowerLines/PowerLinesState';
+import { RhythmSequenceState } from './RhythmSequence/RhythmSequenceState';
+import { OpponentsState } from './Opponents/OpponentsState';
 
 
 
 export class GameUpdater {
 
-  constructor(private rhythmTileState: RhythmTileState, private powerLinesState: PowerLinesState, private playersState: PlayersState) { }
+  constructor(private rhythmTileState: RhythmSequenceState, private powerLinesState: PowerLinesState, private playersState: OpponentsState) { }
 
   goToNextTileDebounce = _.debounce(() => this.goToNextTile(), ANIMATION_TIME, { leading: true })
 
   init = () => {
-    setInterval(() => !document.hidden && this.powerLinesState.addEnemySlash(_.random(2)), 2000)
+    setInterval(() => !document.hidden && this.powerLinesState.addEnemySlash(_.random(NB_LINES - 1)), 2000)
   }
 
   handleKeyEvent = (keyPressed: string) => {
@@ -52,7 +52,7 @@ export class GameUpdater {
     if (this.rhythmTileState.currentTile >= this.rhythmTileState.tileSequence.length) {
       new Audio("slash1.mp3").play()
       eventBus.emit("ANIMATE_ATTACK_" + (_.random(1, 3)));
-      this.powerLinesState.addPlayerSlash(_.random(2))
+      this.powerLinesState.addPlayerSlash(_.random(NB_LINES - 1))
       this.endTileSequence();
     }
   }
@@ -65,7 +65,7 @@ export class GameUpdater {
 
   @action
   private endTileSequence() {
-    eventBus.emit("ANIMATE_ATTACK_" + (Math.floor(Math.random() * 3 + 1)));
+    eventBus.emit("ANIMATE_ATTACK_" + _.random(NB_LINES - 1));
     this.rhythmTileState.tileSequence = generateTileSequence(SEQUENCE_LENGTH);
     this.rhythmTileState.currentTile = 0;
   }

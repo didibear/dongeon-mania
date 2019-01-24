@@ -9,7 +9,7 @@ export type SlashProgression = {
   progression: number // in 0..100
 }
 
-export default class PowerLinesState {
+export class PowerLinesState {
   @observable playerLines: Array<SlashProgression[]> = Array.from(Array(NB_LINES)).map(() => [])
   @observable enemyLines: Array<SlashProgression[]> = Array.from(Array(NB_LINES)).map(() => [])
 

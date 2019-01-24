@@ -19,7 +19,7 @@ export function generateTileSequence(n: number): number[] {
   return array
 }
 
-export default class RhythmTileState {
+export class RhythmSequenceState {
   @observable tileSequence: number[] = generateTileSequence(SEQUENCE_LENGTH)
   @observable currentTile: number = 0
   @observable transition: number = 0

@@ -2,7 +2,7 @@ import _ from "lodash"
 import { inject, observer } from 'mobx-react'
 import React, { Fragment } from "react"
 import { NB_TILE_COLUMNS, NB_VISIBLE_TILES, TILE_COLORS } from "Constant"
-import RhythmTileState from "phases/game/RhythmTileState"
+import { RhythmSequenceState } from "./RhythmSequenceState"
 import { KeyboardState } from "utils/events/KeyboardState"
 import settingStore from "SettingStore"
 
@@ -75,7 +75,7 @@ const HighlightTiles = observer(({ downKeys }: { downKeys: Map<string, boolean> 
 
 type RhythmTilesProps = {
   keyboardState?: KeyboardState
-  rhythmTileState?: RhythmTileState
+  rhythmTileState?: RhythmSequenceState
 }
 
 export default inject("keyboardState", "rhythmTileState")(observer((props: RhythmTilesProps) => {

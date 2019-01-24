@@ -3,7 +3,7 @@ import backslash from "assets/img/backslash.png";
 import { NB_LINES } from "Constant";
 import _ from "lodash";
 import { inject, observer } from 'mobx-react';
-import PowerLinesState, { SlashProgression } from "phases/game/PowerLinesState";
+import { PowerLinesState, SlashProgression } from "phases/game/PowerLines/PowerLinesState";
 import React from "react";
 // Constants
 
@@ -24,7 +24,7 @@ const Slash = (props: { line: number, slash: SlashProgression, enemy: boolean })
 
 export default inject("powerLinesState")(observer(({ powerLinesState }: { powerLinesState?: PowerLinesState }) => {
 
-  return <div style={{ width: "100%", height: "80%", display: "inline-block" }}>
+  return <div style={{ width: "70%", height: "70%", display: "inline-block" }}>
     <svg width="100%" height="100%">
 
       <PowerLines />
