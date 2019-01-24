@@ -18,15 +18,11 @@ const PowerLines = () => <>
       fill="#AAA" />)}
 </>
 
-const Slash = (props: { line: number, slash: SlashProgression, enemy: boolean }) => <image href={props.enemy ? backslash : slash}
-  x={`${props.slash.progression}%`} y={`${props.line * (LINE_HEIGHT + MARGIN) + 2 * MARGIN}%`}
-  height={`${LINE_HEIGHT - MARGIN * 2}%`} width="40px" />
+const Slash = (props: { line: number, slash: SlashProgression, enemy: boolean }) => <circle 
+  cx={`${props.slash.progression}%`} cy={`${props.line * (LINE_HEIGHT + MARGIN) + MARGIN + LINE_HEIGHT/2}%`}
+  r={`${LINE_HEIGHT/6}%`} fill={props.enemy ? "red" : "blue"} />
 
-type PowerLinesProps = {
-  powerLinesState?: PowerLinesState
-}
-
-export default inject("powerLinesState")(observer(({ powerLinesState }: PowerLinesProps) => {
+export default inject("powerLinesState")(observer(({ powerLinesState }: { powerLinesState?: PowerLinesState }) => {
 
   return <div style={{ width: "100%", height: "80%", display: "inline-block" }}>
     <svg width="100%" height="100%">

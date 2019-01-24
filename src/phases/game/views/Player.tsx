@@ -5,8 +5,11 @@ import character from 'assets/img/character.png';
 import eventBus from "utils/events/EventBus";
 import React from "react";
 import SpriteAnimations from "../../../utils/views/SpriteAnimations";
+import { observable } from 'mobx';
+import { MAX_HEALTH } from 'Constant';
+import _ from 'lodash';
 
-export default () => <SpriteAnimations eventBus={eventBus} widthFrame={50} heightFrame={36}>
+export const PlayerSprite = () => <SpriteAnimations eventBus={eventBus} widthFrame={50} heightFrame={36}>
   {{
     mainAnimation: { image: character, steps: 4, fps: 4 },
     instantAnimations: [
@@ -16,3 +19,4 @@ export default () => <SpriteAnimations eventBus={eventBus} widthFrame={50} heigh
     ]
   }}
 </SpriteAnimations>
+

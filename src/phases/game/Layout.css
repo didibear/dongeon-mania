@@ -5,8 +5,9 @@
   width: 100%;
   
   grid-template: ". rhythm-tiles ." 1fr
-                 "character rhythm-tiles enemy" 1fr
-                 "character lines enemy" 2fr
+                 "player-sprite rhythm-tiles enemy" 1fr
+                 "player-sprite lines enemy" 1fr
+                 "player-life lines enemy-life" 1fr
                  / 1fr 2fr 1fr;
 
 }
@@ -18,14 +19,24 @@
   grid-area: rhythm-tiles;
 }
 
-.character {
+.player-sprite {
   background-color: rgb(255, 0, 0, 0.3);
-  grid-area: character;
+  grid-area: player-sprite;
+}
+
+.player-life {
+  background-color: rgb(255, 0, 255, 0.3);
+  grid-area: player-life;
 }
 
 .enemy {
   background-color: rgb(0, 255, 255, 0.3);
   grid-area: enemy;
+}
+
+.enemy-life {
+  background-color: rgb(255, 0, 255, 0.3);
+  grid-area: enemy-life;
 }
 
 .lines {

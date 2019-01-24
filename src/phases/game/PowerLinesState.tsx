@@ -13,15 +13,15 @@ export default class PowerLinesState {
   @observable playerLines: Array<SlashProgression[]> = Array.from(Array(NB_LINES)).map(() => [])
   @observable enemyLines: Array<SlashProgression[]> = Array.from(Array(NB_LINES)).map(() => [])
 
-  playerSlashs<T>(callback : (line: number, slash: SlashProgression) => T): T[] {
+  playerSlashs<T>(callback: (line: number, slash: SlashProgression) => T): T[] {
     return this.playerLines.flatMap((slashs, line) => slashs.map(slash => callback(line, slash)))
   }
-  enemySlashs<T>(callback : (line: number, slash: SlashProgression) => T): T[] {
+  enemySlashs<T>(callback: (line: number, slash: SlashProgression) => T): T[] {
     return this.enemyLines.flatMap((slashs, line) => slashs.map(slash => callback(line, slash)))
   }
 
-  @action addPlayerSlash = (line: number) => this.playerLines[line].push({progression: 0})
-  @action addEnemySlash = (line: number) => this.enemyLines[line].push({progression: 100})
+  @action addPlayerSlash = (line: number) => this.playerLines[line].push({ progression: 0 })
+  @action addEnemySlash = (line: number) => this.enemyLines[line].push({ progression: 100 })
 
   @action incrementSlashProgressions = () => {
     this.playerLines.forEach(slashs => slashs.forEach(slash => slash.progression += SLASH_SPEED))
@@ -31,6 +31,11 @@ export default class PowerLinesState {
   @action removeArrivedSlashs = () => {
     this.playerLines.forEach(slashs => _.remove(slashs, slash => slash.progression >= 100))
     this.enemyLines.forEach(slashs => _.remove(slashs, slash => slash.progression <= 0))
+  }
+
+  @action doOnArrivedSlashs = (playerArrived: () => void, enemyArrived: () => void) => {
+    this.playerLines.forEach(slashs => slashs.filter(slash => slash.progression >= 100).forEach(playerArrived))
+    this.enemyLines.forEach(slashs => slashs.filter(slash => slash.progression <= 0).forEach(enemyArrived))
   }
 
   @action removeCollidedSlashs = () => {

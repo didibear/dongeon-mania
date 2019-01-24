@@ -1,4 +1,4 @@
-import { NB_TILE_COLUMNS, DEFAULT_GAME_KEYS_1, DEFAULT_GAME_KEYS_2 } from 'Constant';
+import { NB_TILE_COLUMNS, DEFAULT_RHYTHM_TILE_KEYS_1, DEFAULT_RHYTHM_TILE_KEYS_2, NB_LINES, DEFAULT_POWER_LINE_KEYS_1, DEFAULT_POWER_LINE_KEYS_2 } from 'Constant';
 import _ from 'lodash';
 import { Observer } from 'mobx-react';
 import React from 'react';
@@ -6,12 +6,17 @@ import settingStore from 'SettingStore';
 import FiniteStateMachine, { MachineState } from "utils/FiniteStateMachine";
 import Menu from './Menu';
 
+
+
+const Binder = (props: { keys: string[], index: number }) => <Observer>{() =>
+  <input style={{ textAlign: "center", width: "50px"}} 
+    minLength={1} maxLength={1} 
+    value={props.keys[props.index]} onChange={event => props.keys[props.index] = event.target.value} />
+}</Observer>
+
+
 export default class Settings implements MachineState {
 
-  resetKeys = () => {
-    settingStore.gameKeys1 = DEFAULT_GAME_KEYS_1
-    settingStore.gameKeys2 = DEFAULT_GAME_KEYS_2
-  }
 
   render = (context: FiniteStateMachine) => <div style={{ paddingTop: "10%" }}>
 
@@ -27,13 +32,19 @@ export default class Settings implements MachineState {
         <tbody>
           {_.range(NB_TILE_COLUMNS).map(i => <tr>
             <th>Tile {i + 1}</th>
-            <td><input style={{ textAlign: "center" }} minLength={1} maxLength={1} value={settingStore.gameKeys1[i]} onChange={event => settingStore.gameKeys1[i] = event.target.value} /></td>
-            <td><input style={{ textAlign: "center" }} minLength={1} maxLength={1} value={settingStore.gameKeys2[i]} onChange={event => settingStore.gameKeys2[i] = event.target.value} /></td>
+            <td><Binder keys={settingStore.rhythmTileKeys1} index={i} /></td>
+            <td><Binder keys={settingStore.rhythmTileKeys2} index={i} /></td>
+          </tr>)}
+          {_.range(NB_LINES).map(i => <tr>
+            <th>Power line {i + 1}</th>
+            <td><Binder keys={settingStore.powerLineKeys1} index={i} /></td>
+            <td><Binder keys={settingStore.powerLineKeys2} index={i} /></td>
+            <td></td>
           </tr>)}
         </tbody>
       </table>
     }</Observer>
     <button onClick={() => context.changeState(new Menu())}>Back</button>
-    <button onClick={this.resetKeys}>Reset</button>
+    <button onClick={settingStore.resetKeys}>Reset</button>
   </div>
 }
