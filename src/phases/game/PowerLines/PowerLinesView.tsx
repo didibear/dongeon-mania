@@ -28,8 +28,8 @@ export default inject("powerLinesState")(observer(({ powerLinesState }: { powerL
     <svg width="100%" height="100%">
 
       <PowerLines />
-      {powerLinesState!.playerSlashs((line, slash) => <Slash key={`enemy slash ${line} ${slash.progression}`} line={line} slash={slash} enemy={false} />)}
-      {powerLinesState!.enemySlashs((line, slash) => <Slash key={`enemy slash ${line} ${slash.progression}`} line={line} slash={slash} enemy={true} />)}
+      {powerLinesState!.mapPlayerSlashs((line, slash) => <Slash key={`enemy slash ${line} ${slash.progression}`} line={line} slash={slash} enemy={false} />)}
+      {powerLinesState!.mapEnemySlashs((line, slash) => <Slash key={`enemy slash ${line} ${slash.progression}`} line={line} slash={slash} enemy={true} />)}
     </svg>
   </div>
 }))

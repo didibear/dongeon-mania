@@ -1,10 +1,11 @@
 import _ from "lodash"
-import { inject, observer } from 'mobx-react'
+import { inject, observer, propTypes } from 'mobx-react'
 import React, { Fragment } from "react"
-import { NB_TILE_COLUMNS, NB_VISIBLE_TILES, TILE_COLORS } from "Constant"
+import { NB_TILE_COLUMNS, NB_VISIBLE_TILES, TILE_COLORS, PLAYER_LOCK_TIME_MILLIS } from "Constant"
 import { RhythmSequenceState } from "./RhythmSequenceState"
 import { KeyboardState } from "utils/events/KeyboardState"
 import settingStore from "SettingStore"
+import { OpponentsState } from "../Opponents/OpponentsState";
 
 // Constants
 
@@ -16,14 +17,15 @@ const TILE_WIDTH = (BOARD_WIDTH - MARGIN * (NB_TILE_COLUMNS + 1)) / NB_TILE_COLU
 
 const TILE_SPAN = TILE_WIDTH + MARGIN
 // const BOARD_WIDTH = NB_TILE_COLUMNS * TILE_SPAN + MARGIN * 2
-const TRACK_HEIGHT = NB_VISIBLE_TILES * TILE_SPAN
+const TRACK_HEIGHT = NB_VISIBLE_TILES * TILE_SPAN - MARGIN
+const PROGRESS_BAR_HEIGHT = MARGIN
 
 //////////////////////
 // Components
 
-const Arrival = () => <rect key="arrival"
-  x={`${0 - MARGIN}%`} y={`${(NB_VISIBLE_TILES - 1) * TILE_SPAN}%`}
-  width={`${BOARD_WIDTH}%`} height={`${TILE_SPAN + MARGIN}%`}
+const Background = () => <rect key="background"
+  x={`${0 - MARGIN}%`} y={`${0 - MARGIN}%`}
+  width={`${BOARD_WIDTH}%`} height={`${BOARD_HEIGHT}%`}
   fill="grey" />
 
 // Tracks
@@ -70,19 +72,27 @@ const HighlightTiles = observer(({ downKeys }: { downKeys: Map<string, boolean> 
   )}
 </>)
 
+const ProgressBar = ({ percent, color }: { percent: number, color: string }) => (
+  <rect x={0} y={`${TRACK_HEIGHT - PROGRESS_BAR_HEIGHT}%`}
+    width={`${percent * BOARD_WIDTH}%`} height={`${PROGRESS_BAR_HEIGHT}%`}
+    fill={color} />
+)
 
 // Exported Component
 
 type RhythmTilesProps = {
   keyboardState?: KeyboardState
   rhythmTileState?: RhythmSequenceState
+  opponentsState?: OpponentsState
 }
 
-export default inject("keyboardState", "rhythmTileState")(observer((props: RhythmTilesProps) => {
-  const { keyboardState, rhythmTileState } = props
+export default inject("keyboardState", "rhythmTileState", "opponentsState")(observer((props: RhythmTilesProps) => {
+  const { keyboardState, rhythmTileState, opponentsState } = props
 
   const { tileSequence, currentTile, transition } = rhythmTileState!
   const { downKeys } = keyboardState!
+  const { playerIsLocked, playerLockTime } = opponentsState!
+
 
   const visibleTileSequence = tileSequence.slice(currentTile, currentTile + NB_VISIBLE_TILES)
   const transitionGap = transition * TILE_SPAN
@@ -90,12 +100,15 @@ export default inject("keyboardState", "rhythmTileState")(observer((props: Rhyth
   return <div style={{ width: "40%", height: "100%", display: "inline-block" }}>
     <svg width={`${BOARD_WIDTH}%`} height={`${BOARD_HEIGHT}%`}>
 
-      <Arrival />
+      <Background />
 
-      <svg x={`${MARGIN / 2}%`}>
+      <svg x={`${MARGIN / 2}%`} y={`${MARGIN / 2}%`}>
         <Tracks />
         <Tiles visibleTileSequence={visibleTileSequence} transitionGap={transitionGap} />
         <HighlightTiles downKeys={downKeys} />
+
+        {playerIsLocked && <ProgressBar percent={playerLockTime / PLAYER_LOCK_TIME_MILLIS} color="red" />}
+
       </svg>
     </svg>
   </div>

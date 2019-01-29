@@ -7,6 +7,8 @@ export const NB_LINES = 3
 export const SEQUENCE_LENGTH = 5
 export const MAX_HEALTH = 5
 export const SLASH_SPEED = 1
+export const PLAYER_LOCK_TIME_MILLIS = 300
+
 
 export const DEFAULT_RHYTHM_TILE_KEYS_1 = ["a", "z", "e", "r", "t"]
 export const DEFAULT_RHYTHM_TILE_KEYS_2 = ["y", "u", "i", "o", "p"]
