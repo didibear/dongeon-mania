@@ -68,7 +68,7 @@ const HighlightTile = ({ numTile }: { numTile: number }) => (
 
 const HighlightTiles = observer(({ downKeys }: { downKeys: Map<string, boolean> }) => <>
   {Array.from(downKeys.keys()).map(k => (
-    <HighlightTile key={`highlight tile ${k}`} numTile={settingStore.keyIndexOf(k)} />)
+    <HighlightTile key={`highlight tile ${k}`} numTile={settingStore.indexOfRhythmTileKey(k)} />)
   )}
 </>)
 

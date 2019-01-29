@@ -17,9 +17,15 @@ export class SettingStore {
     this.powerLineKeys2 = DEFAULT_POWER_LINE_KEYS_2
   }
 
-  keyIndexOf = (key: string) => {
+  indexOfRhythmTileKey = (key: string) => {
     const i1 = this.rhythmTileKeys1.indexOf(key)
     const i2 = this.rhythmTileKeys2.indexOf(key)
+    return i1 !== -1 ? i1 : i2
+  }
+  
+  indexOfPowerLineKey = (key: string) => {
+    const i1 = this.powerLineKeys1.indexOf(key)
+    const i2 = this.powerLineKeys2.indexOf(key)
     return i1 !== -1 ? i1 : i2
   }
 }

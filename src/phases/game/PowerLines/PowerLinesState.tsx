@@ -10,19 +10,18 @@ export type SlashProgression = {
 }
 
 export class PowerLinesState {
-  @observable chosenLine = 0 
+  @observable chosenLine = 0
 
   @observable playerLines: Array<SlashProgression[]> = Array.from(Array(NB_LINES)).map(() => [])
   @observable enemyLines: Array<SlashProgression[]> = Array.from(Array(NB_LINES)).map(() => [])
 
   // VIEWS
 
-  mapPlayerSlashs<T>(callback: (line: number, slash: SlashProgression) => T): T[] {
-    return this.playerLines.flatMap((slashs, line) => slashs.map(slash => callback(line, slash)))
-  }
-  mapEnemySlashs<T>(callback: (line: number, slash: SlashProgression) => T): T[] {
-    return this.enemyLines.flatMap((slashs, line) => slashs.map(slash => callback(line, slash)))
-  }
+  mapPlayerSlashs: <T>(callback: (line: number, slash: SlashProgression) => T) => T[] = callback =>
+    this.playerLines.flatMap((slashs, line) => slashs.map(slash => callback(line, slash)))
+
+  mapEnemySlashs: <T>(callback: (line: number, slash: SlashProgression) => T) => T[] = callback =>
+    this.enemyLines.flatMap((slashs, line) => slashs.map(slash => callback(line, slash)))
 
   // ACTIONS
 
@@ -66,5 +65,5 @@ export class PowerLinesState {
   }
 
   @action changeLine = (lineNumber: number) => this.chosenLine = lineNumber
-  
+
 }

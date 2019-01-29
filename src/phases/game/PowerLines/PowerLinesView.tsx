@@ -1,5 +1,3 @@
-import slash from "assets/img/slash.png";
-import backslash from "assets/img/backslash.png";
 import { NB_LINES } from "Constant";
 import _ from "lodash";
 import { inject, observer } from 'mobx-react';
@@ -18,18 +16,28 @@ const PowerLines = () => <>
       fill="#AAA" />)}
 </>
 
-const Slash = (props: { line: number, slash: SlashProgression, enemy: boolean }) => <circle 
-  cx={`${props.slash.progression}%`} cy={`${props.line * (LINE_HEIGHT + MARGIN) + MARGIN + LINE_HEIGHT/2}%`}
-  r={`${LINE_HEIGHT/6}%`} fill={props.enemy ? "red" : "blue"} />
+const Slash = (props: { line: number, slash: SlashProgression, enemy: boolean }) => <circle
+  cx={`${props.slash.progression}%`} cy={`${props.line * (LINE_HEIGHT + MARGIN) + MARGIN + LINE_HEIGHT / 2}%`}
+  r={`${LINE_HEIGHT / 6}%`} fill={props.enemy ? "red" : "blue"} />
+
+const LineCursor = ({ chosenLine }: { chosenLine: number }) =>
+  <rect key="chosenLine" x={`${MARGIN}%`} y={`${MARGIN + chosenLine * (LINE_HEIGHT + MARGIN) + LINE_HEIGHT / 3}%`}
+    width={`5%`} height={`${LINE_HEIGHT / 3}%`}
+    fill="yellow" />
+
 
 export default inject("powerLinesState")(observer(({ powerLinesState }: { powerLinesState?: PowerLinesState }) => {
+  const { mapEnemySlashs, mapPlayerSlashs, chosenLine } = powerLinesState!
 
   return <div style={{ width: "70%", height: "70%", display: "inline-block" }}>
     <svg width="100%" height="100%">
 
       <PowerLines />
-      {powerLinesState!.mapPlayerSlashs((line, slash) => <Slash key={`enemy slash ${line} ${slash.progression}`} line={line} slash={slash} enemy={false} />)}
-      {powerLinesState!.mapEnemySlashs((line, slash) => <Slash key={`enemy slash ${line} ${slash.progression}`} line={line} slash={slash} enemy={true} />)}
+      {mapPlayerSlashs((line, slash) => <Slash key={`enemy slash ${line} ${slash.progression}`} line={line} slash={slash} enemy={false} />)}
+      {mapEnemySlashs((line, slash) => <Slash key={`enemy slash ${line} ${slash.progression}`} line={line} slash={slash} enemy={true} />)}
+
+      <LineCursor chosenLine={chosenLine} />
     </svg>
   </div>
 }))
+
