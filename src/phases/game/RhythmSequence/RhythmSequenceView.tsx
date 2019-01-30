@@ -1,11 +1,12 @@
 import _ from "lodash"
 import { inject, observer, propTypes } from 'mobx-react'
 import React, { Fragment } from "react"
-import { NB_TILE_COLUMNS, NB_VISIBLE_TILES, TILE_COLORS, PLAYER_LOCK_TIME_MILLIS } from "Constant"
+import { NB_TILE_COLUMNS, NB_VISIBLE_TILES, TILE_COLORS, PLAYER_LOCK_TIME_MILLIS, PLAYER_PREPARATION_TIME_MILLIS } from "Constant"
 import { RhythmSequenceState } from "./RhythmSequenceState"
 import { KeyboardState } from "utils/events/KeyboardState"
 import settingStore from "SettingStore"
 import { OpponentsState } from "../Opponents/OpponentsState";
+import { pct } from "utils/views/SVG";
 
 // Constants
 
@@ -91,7 +92,7 @@ export default inject("keyboardState", "rhythmTileState", "opponentsState")(obse
 
   const { tileSequence, currentTile, transition } = rhythmTileState!
   const { downKeys } = keyboardState!
-  const { playerIsLocked, playerLockTime } = opponentsState!
+  const { playerIsLocked, playerLockTime, playerIsPreparing, playerPreparationTime } = opponentsState!
 
 
   const visibleTileSequence = tileSequence.slice(currentTile, currentTile + NB_VISIBLE_TILES)
@@ -110,6 +111,8 @@ export default inject("keyboardState", "rhythmTileState", "opponentsState")(obse
         {playerIsLocked && <ProgressBar percent={playerLockTime / PLAYER_LOCK_TIME_MILLIS} color="red" />}
 
       </svg>
+      {playerIsPreparing && <ProgressBar percent={playerPreparationTime / PLAYER_PREPARATION_TIME_MILLIS} color="blue" />}
+      {playerIsPreparing && <rect x={0} y={0} width={pct(BOARD_WIDTH - MARGIN)} height={pct(BOARD_HEIGHT)} fill="white" fill-opacity="0.5" />}
     </svg>
   </div>
 }))

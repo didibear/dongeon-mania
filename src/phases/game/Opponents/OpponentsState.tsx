@@ -19,11 +19,11 @@ export class OpponentsState {
   @action decrementEnemyHP = () => this.enemyHealthPoint--;
   
   @action lockPlayerInputFor = (millis: number) => this.playerLockTime = millis
-  @action decreasePlayerLockTime = (millis: number) => this.playerLockTime = Math.max(this.playerLockTime - millis, 0)
-  
   @action startPlayerPreparationFor = (millis: number) => this.playerPreparationTime = millis
-  @action decreasePlayerPreparationTime = (millis: number) => this.playerPreparationTime = Math.max(this.playerLockTime - millis, 0)
+  @action stopPlayerPreparation = () => this.playerPreparationTime = 0
 
-
-
+  @action updateTimes = (millisElapsed : number) => {
+    this.playerLockTime = Math.max(this.playerLockTime - millisElapsed, 0)
+    this.playerPreparationTime = Math.max(this.playerPreparationTime - millisElapsed, 0)
+  }
 }

@@ -1,4 +1,4 @@
-import { ANIMATION_TIME } from 'Constant';
+import { FRAME_DURATION } from 'Constant';
 import { Provider } from "mobx-react";
 import React from 'react';
 import { KeyboardState } from "utils/events/KeyboardState";
@@ -37,7 +37,7 @@ export default class Game implements MachineState {
     this.gameUpdater.init()
     document.addEventListener('keydown', this.handleKeyDown)
     document.addEventListener('keyup', this.handleKeyUp)
-    setInterval(() => !document.hidden && this.gameUpdater.update(), ANIMATION_TIME)
+    setInterval(() => !document.hidden && this.gameUpdater.update(), FRAME_DURATION)
   }
 
   cleanup = () => {
