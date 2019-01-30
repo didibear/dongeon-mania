@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react";
-import { initializeInstance, changeDependenciesStateTo0 } from "mobx/lib/internal";
 
 export type MachineState = {
   init?(context: FiniteStateMachine): void

@@ -112,7 +112,7 @@ export default inject("keyboardState", "rhythmTileState", "opponentsState")(obse
 
       </svg>
       {playerIsPreparing && <ProgressBar percent={playerPreparationTime / PLAYER_PREPARATION_TIME_MILLIS} color="blue" />}
-      {playerIsPreparing && <rect x={0} y={0} width={pct(BOARD_WIDTH - MARGIN)} height={pct(BOARD_HEIGHT)} fill="white" fill-opacity="0.5" />}
+      {playerIsPreparing && <rect x={0} y={0} width={pct(BOARD_WIDTH - MARGIN)} height={pct(BOARD_HEIGHT)} fill="white" fillOpacity="0.5" />}
     </svg>
   </div>
 }))

@@ -18,7 +18,7 @@ const backgroundStyle : React.CSSProperties= {
 export default class App extends React.Component {
 
   render = () => <div tabIndex={0} style={backgroundStyle}>
-    <FiniteStateMachine startState={new Game()} />
+    <FiniteStateMachine startState={new Menu()} />
     <DevTools />
   </div>
 }

@@ -4,9 +4,9 @@ export const NB_TILE_COLUMNS = 5
 export const NB_VISIBLE_TILES = 5
 export const NB_LINES = 3
 
-export const SEQUENCE_LENGTH = 20
+export const SEQUENCE_LENGTH = 2
 export const MAX_HEALTH = 5
-export const SLASH_SPEED = 0.25
+export const SLASH_SPEED = 1
 export const PLAYER_LOCK_TIME_MILLIS = 250
 export const PLAYER_PREPARATION_TIME_MILLIS = 4000
 
@@ -25,4 +25,6 @@ export const TRANSITION_STEPS = 10
 
 export const TILE_COLORS = ["#49F03A", "#FF3535", "#FFE50E", "#3070FF", "#FFA60E"]
 
+
+export const MONSTER_NAMES = ["Graou", "MOOO", "HEELLLLE"]
 
