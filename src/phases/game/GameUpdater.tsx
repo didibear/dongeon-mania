@@ -1,14 +1,21 @@
-import { FRAME_DURATION, NB_LINES, PLAYER_LOCK_TIME_MILLIS, PLAYER_PREPARATION_TIME_MILLIS } from 'Constant';
-import _ from 'lodash';
-import { action } from 'mobx';
-import Menu from 'phases/menu/Menu';
-import settingStore from "SettingStore";
-import eventBus from "utils/events/EventBus";
-import FiniteStateMachine from 'utils/FiniteStateMachine';
-import { OpponentsState } from './Opponents/OpponentsState';
-import { PowerLinesState } from './PowerLines/PowerLinesState';
-import { RhythmSequenceState } from './RhythmSequence/RhythmSequenceState';
-import { Win, Start } from './Game';
+import {
+  FRAME_DURATION,
+  NB_LEVELS,
+  NB_LINES,
+  PLAYER_LOCK_TIME_MILLIS,
+  PLAYER_PREPARATION_TIME_MILLIS,
+} from 'Constant'
+import _ from 'lodash'
+import { action } from 'mobx'
+import Menu from 'phases/menu/Menu'
+import settingStore from 'SettingStore'
+import eventBus from 'utils/events/EventBus'
+import FiniteStateMachine from 'utils/FiniteStateMachine'
+
+import { Start, Win } from './Game'
+import { OpponentsState } from './Opponents/OpponentsState'
+import { PowerLinesState } from './PowerLines/PowerLinesState'
+import { RhythmSequenceState } from './RhythmSequence/RhythmSequenceState'
 
 export class GameUpdater {
   intervals: NodeJS.Timeout[] = []
@@ -17,20 +24,25 @@ export class GameUpdater {
     private level: number,
     private rhythmTileState: RhythmSequenceState,
     private powerLinesState: PowerLinesState,
-    private opponentsState: OpponentsState) { }
-
-  init = () => {
-    this.intervals.push(setInterval(() => !document.hidden && this.powerLinesState.addEnemySlash(_.random(NB_LINES - 1)), 4000))
+    private opponentsState: OpponentsState) { 
+      
+      this.opponentsState.startPlayerPreparationFor(PLAYER_PREPARATION_TIME_MILLIS)
   }
-  cleanup = () => this.intervals.forEach(id => clearInterval(id))
 
   @action
   update = (context: FiniteStateMachine) => {
-    this.opponentsState.updateTimes(FRAME_DURATION)
+    this.opponentsState.updatePlayerTimes(FRAME_DURATION)
 
     if (this.opponentsState.playerIsPreparing) return
 
+    this.opponentsState.updateEnemyTimes(FRAME_DURATION)
+    
     // Update power lines
+
+    if (this.opponentsState.enemyAttack) {
+      this.powerLinesState.addEnemySlash(_.random(NB_LINES - 1))
+      this.opponentsState.resetEnemyAttack()
+    }
 
     this.powerLinesState.incrementSlashProgressions()
     this.powerLinesState.doOnArrivedSlashs(this.opponentsState.decrementEnemyHP, this.opponentsState.decrementPlayerHP)
@@ -48,7 +60,7 @@ export class GameUpdater {
     }
 
     if (this.opponentsState.enemyHealthPoint <= 0) {
-      context.changeState(this.level === 2 ? new Win() : new Start(this.level + 1))
+      context.changeState(this.level === NB_LEVELS - 1 ? new Win() : new Start(this.level + 1))
     }
   }
 

@@ -10,9 +10,13 @@ export const SLASH_SPEED = 0.3
 export const PLAYER_LOCK_TIME_MILLIS = 250
 export const PLAYER_PREPARATION_TIME_MILLIS = 4000
 
-export const DEFAULT_RHYTHM_TILE_KEYS_1 = ["a", "z", "e", "r", "t"]
+export const NB_LEVELS = 3
+export const ENEMY_ATTACK_PERIOD_TIME = 4000
+export const MAXIMAL_SPEED_REDUCE = 0.40
+
+export const DEFAULT_RHYTHM_TILE_KEYS_1 = ["q", "w", "e", "r", "t"]
 export const DEFAULT_RHYTHM_TILE_KEYS_2 = ["y", "u", "i", "o", "p"]
-export const DEFAULT_POWER_LINE_KEYS_1 = ["q", "s", "d"]
+export const DEFAULT_POWER_LINE_KEYS_1 = ["a", "s", "d"]
 export const DEFAULT_POWER_LINE_KEYS_2 = ["h", "j", "k"]
 
 // Design Config
