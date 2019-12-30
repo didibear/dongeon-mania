@@ -9,7 +9,7 @@
     "@types/react": "16.7.18",
     "@types/react-dom": "16.0.11",
     "immutable": "^4.0.0-rc.12",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "mobx": "^5.8.0",
     "mobx-react": "^5.4.3",
     "react": "^16.7.0",
